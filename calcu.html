@@ -6,15 +6,16 @@
     <title>Calculator</title>
 </head>
 <body>
+    <h1>Simple Calculator</h1>
     <form action="/calculate" method="post">
-        <input type="number" name="num1" placeholder="First Number" required>
+        <input type="number" name="num1" placeholder="Enter first number" required>
         <select name="operation">
             <option value="plus">+</option>
             <option value="minus">-</option>
             <option value="times">*</option>
-            <option value="divided">÷</option>
+            <option value="divided">/</option>
         </select>
-        <input type="number" name="num2" placeholder="Second Number" required>
+        <input type="number" name="num2" placeholder="Enter second number" required>
         <button type="submit">Calculate</button>
     </form>
 </body>
