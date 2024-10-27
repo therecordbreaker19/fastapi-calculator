@@ -1,17 +1,18 @@
-import os
 from fastapi import FastAPI, HTTPException, Form
 from fastapi.responses import HTMLResponse
-import uvicorn
+import os
 
 app = FastAPI()
 
-# Endpoint for loading HTML form
 @app.get("/", response_class=HTMLResponse)
 async def read_root():
-    with open("calc.html", "r") as file:
-        return file.read()
+    try:
+        # Ensure "calc.html" is in the same directory or specify the correct path
+        with open("calc.html", "r") as file:
+            return file.read()
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="calc.html not found")
 
-# Endpoint for performing calculations
 @app.post("/calculate")
 async def calculate(num1: float = Form(...), operation: str = Form(...), num2: float = Form(...)):
     if operation == "plus":
@@ -27,7 +28,7 @@ async def calculate(num1: float = Form(...), operation: str = Form(...), num2: f
     else:
         raise HTTPException(status_code=400, detail="Invalid operation.")
 
-# Run the app with a specified or default port
 if __name__ == "__main__":
-    port = int(os.getenv("PORT", 8000))  # Default to 8000 if PORT not set
+    import uvicorn
+    port = int(os.getenv("PORT", 8000))  # Defaults to 8000 if PORT is not set
     uvicorn.run(app, host="0.0.0.0", port=port)
